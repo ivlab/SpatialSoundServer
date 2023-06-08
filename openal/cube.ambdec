@@ -1,0 +1,56 @@
+# AmbDec configuration
+# Written by AmbDec-0.6.2 at Thu Mar 16 15:37:02 2017
+
+/description      cube,  max rV at LF, max rE at HF
+
+/version          3
+
+/dec/chan_mask    f
+/dec/freq_bands   2
+/dec/speakers     8
+/dec/coeff_scale  sn3d
+
+/opt/input_scale  sn3d
+/opt/nfeff_comp   input
+/opt/delay_comp   off
+/opt/level_comp   off
+/opt/xover_freq    400
+/opt/xover_ratio   0.0
+
+/speakers/{
+add_spkr   LFU     2.000     45.0     35.3    system:playback_1
+add_spkr   RFU     2.000    -45.0     35.3    system:playback_2
+add_spkr   RBU     2.000   -135.0     35.3    system:playback_3
+add_spkr   LBU     2.000    135.0     35.3    system:playback_4
+add_spkr   LFD     2.000     45.0    -35.3    system:playback_5
+add_spkr   RFD     2.000    -45.0    -35.3    system:playback_6
+add_spkr   RBD     2.000   -135.0    -35.3    system:playback_7
+add_spkr   LBD     2.000    135.0    -35.3    system:playback_8
+/}
+
+/lfmatrix/{
+order_gain     1.00000  1.00000  0.00000  0.00000
+add_row     0.125000  0.216602  0.216316  0.216602
+add_row     0.125000 -0.216602  0.216316  0.216602
+add_row     0.125000 -0.216602  0.216316 -0.216602
+add_row     0.125000  0.216602  0.216316 -0.216602
+add_row     0.125000  0.216602 -0.216316  0.216602
+add_row     0.125000 -0.216602 -0.216316  0.216602
+add_row     0.125000 -0.216602 -0.216316 -0.216602
+add_row     0.125000  0.216602 -0.216316 -0.216602
+/}
+
+/hfmatrix/{
+order_gain     2.00000  1.15400  0.00000  0.00000
+add_row     0.125000  0.216602  0.216316  0.216602
+add_row     0.125000 -0.216602  0.216316  0.216602
+add_row     0.125000 -0.216602  0.216316 -0.216602
+add_row     0.125000  0.216602  0.216316 -0.216602
+add_row     0.125000  0.216602 -0.216316  0.216602
+add_row     0.125000 -0.216602 -0.216316  0.216602
+add_row     0.125000 -0.216602 -0.216316 -0.216602
+add_row     0.125000  0.216602 -0.216316 -0.216602
+/}
+
+
+/end
