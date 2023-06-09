@@ -21,8 +21,8 @@ Tested on Windows:
 The project uses the [PyOpenAL](https://pypi.org/project/PyOpenAL/) python bindings for accessing OpenAL and the Flask library for creating the http server.  Both can be installed using pip:
 
 ```
-pip install PyOpenAL
-pip install flask
+pip3 install PyOpenAL
+pip3 install flask
 ``` 
 
 
