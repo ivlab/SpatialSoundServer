@@ -17,9 +17,13 @@ Tested on Windows:
 * Check the OpenAL installation by making sure you can run the openal-info64.exe provided with openal-soft without error.
 * Run the alsoft-config/alsoft-config.exe utility that comes with openal-soft to configure openal for headphones or the particular speaker arrangement that you are using.
 
-## Installing PyOpenAL (required)
-The project uses the [PyOpenAL](https://pypi.org/project/PyOpenAL/) python bindings for openal.  These can be installed using pip, e.g.:
-```pip install PyOpenAL``` 
+## Installing Python dependencies PyOpenAL and Flask (required)
+The project uses the [PyOpenAL](https://pypi.org/project/PyOpenAL/) python bindings for accessing OpenAL and the Flask library for creating the http server.  Both can be installed using pip:
+
+```
+pip install PyOpenAL
+pip install flask
+``` 
 
 
 ## Running and Installing the Server
