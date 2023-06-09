@@ -28,23 +28,10 @@ time.sleep(2)
 os.system("curl -G -d snd=testloop.wav localhost:8000/stop")
 
 
+# EXAMPLE 2: USE THE SPATIAL API WITH A MOVING LISTENER AND STATIONARY SOURCE
 
-# EXAMPLE 2: USE THE SPATIAL API WITH A MOVING SOURCE
-
-# create a repeating beep
-os.system("curl -G -d id=10 -d snd=beep-01.wav -d looping=1 localhost:8000/create_source")
-# move it from left to right
-for x in range(-10, 10):
-    os.system("curl -G -d id=10 -d x=" + str(x) + " localhost:8000/source_param")
-    time.sleep(0.1)
-# turn it off
-os.system("curl -G -d id=10 localhost:8000/stop_source")
-# delete the source (will also stop it, so prev command is not technically necessary here)
-os.system("curl -G -d id=10 localhost:8000/del_source")
-
-
-
-# EXAMPLE 3: USE THE SPATIAL API WITH A MOVING LISTENER AND STATIONARY SOURCE
+# move listener to -10,0,0
+os.system("curl -G -d id=11 -d x=-10 -d y=0 -d z=0 localhost:8000/listener_param")
 
 # create a repeating beep at (0,0,0)
 os.system("curl -G -d id=11 -d snd=beep-01.wav -d looping=1 -d x=0 localhost:8000/create_source")
@@ -58,6 +45,23 @@ os.system("curl -G -d id=11 localhost:8000/stop_source")
 # delete the source (will also stop it, so prev command is not technically necessary here)
 os.system("curl -G -d id=11 localhost:8000/del_source")
 
+
+
+# EXAMPLE 3: USE THE SPATIAL API WITH A MOVING SOURCE, SET VELOCITY TO GET DOPPLER EFFECT
+
+# create a repeating beep
+os.system("curl -G -d id=10 -d snd=beep-01.wav -d looping=1 localhost:8000/create_source")
+# move it from left to right with a velocity of 1 unit for every 0.1 seconds
+speed = 1.0 / 0.1
+os.system("curl -G -d id=10 -d x=-10 -d vx=" + str(speed) + " localhost:8000/source_param")
+
+for x in range(-10, 10):
+    os.system("curl -G -d id=10 -d x=" + str(x) + " localhost:8000/source_param")
+    time.sleep(0.1)
+# turn it off
+os.system("curl -G -d id=10 localhost:8000/stop_source")
+# delete the source (will also stop it, so prev command is not technically necessary here)
+os.system("curl -G -d id=10 localhost:8000/del_source")
 
 
 

@@ -113,10 +113,12 @@ Optional parameters:
 * relative=float -- TODO
 
 
-### Stop/Start an existing audio source
+### Stop/Start/Pause/Rewind an existing audio source
 
 http://localhost:8000/stop_source?id=1
 http://localhost:8000/play_source?id=1
+http://localhost:8000/pause_source?id=1
+http://localhost:8000/rewind_source?id=1
 
 Required parameters:
 * id=int -- The integer id number for this source that you used when creating the source.

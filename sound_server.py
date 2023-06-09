@@ -296,6 +296,33 @@ def route_stop_source():
     spatial_sources[id].play()
     return html_blurb()
 
+@app.route("/pause_source", methods=['GET'])
+def route_pause_source():
+    id = request.args.get('id', type=int)
+    if id is None:
+        print("Missing id parameter")
+        return html_blurb()
+    if not id in spatial_sources.keys():
+        print("Cannot locate a source with id='" + str(id) + "'")
+        return html_blurb()
+
+    spatial_sources[id].pause()
+    return html_blurb()
+
+@app.route("/rewind_source", methods=['GET'])
+def route_rewind_source():
+    id = request.args.get('id', type=int)
+    if id is None:
+        print("Missing id parameter")
+        return html_blurb()
+    if not id in spatial_sources.keys():
+        print("Cannot locate a source with id='" + str(id) + "'")
+        return html_blurb()
+
+    spatial_sources[id].rewind()
+    return html_blurb()
+
+
 @app.route("/del_source", methods=['GET'])
 def route_del_source():
     id = request.args.get('id', type=int)
@@ -533,7 +560,7 @@ def reset():
 
 # ------------------
 
-def html_blurb(info_message: str=None):
+def html_blurb(status_message: str=None):
     html = ""
     if status_message is not None:
         html += "<p>INFO: " + status_message + "</p>"
