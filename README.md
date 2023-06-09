@@ -1,5 +1,18 @@
 # IV/LAB Spatial Sound Server
 
+## Installing OpenAL and openal-soft
+The server requires OpenAL to be installed on the computer.
+
+On Windows
+* Download and run the Windows installer here: https://openal.org/downloads/
+* Download the latest pre-built binaries for openal-soft from here: https://openal-soft.org/
+* Unzip somewhere; follow the hard-to-interpret instructions in the readme to install, specifically:
+  - Copy bin/Win64/soft_oal.dll to C:/Windows/SysWOW64
+  - Copy bin/Win32/soft_oal.dll to C:/Windows/System32
+* Check the OpenAL installation by making sure you can run the openal-info64.exe provided with openal-soft without error.
+* Run the alsoft-config/alsoft-config.exe utility that comes with openal-soft to configure openal for headphones or the particular speaker arrangement that you are using.
+
+
 ## Running and Installing the Server
 To run in local dir for testing with sounds in the sounds/ directory:
 ```python3 cave_sound_server.py```
