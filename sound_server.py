@@ -25,9 +25,9 @@
 ### CONFIGURATION / LOCAL INSTALLATION ###
 
 # root of install tree
-#INSTALL_ROOT = "c:/V"
+INSTALL_ROOT = "c:/V"
 #INSTALL_ROOT = "/usr/local"
-INSTALL_ROOT = "install"
+#INSTALL_ROOT = "install"
 
 # sound_server run scripts are copied/created here
 INSTALL_BIN = INSTALL_ROOT + "/bin"
@@ -618,7 +618,7 @@ def main():
 def install():
     # install python source
     os.makedirs(INSTALL_PY, exist_ok=True)
-    shutil.copyfile(__file__, os.path.join(INSTALL_PY, __file__))
+    shutil.copyfile(__file__, os.path.join(INSTALL_PY, os.path.basename(__file__)))
 
     # install sounds dir
     os.makedirs(INSTALL_SHARE, exist_ok=True)
@@ -628,7 +628,7 @@ def install():
     os.makedirs(INSTALL_BIN, exist_ok=True)
     if sys.platform == 'win32':
         # create a bat file
-        cmd = "@echo off\n" + sys.executable + " " + os.path.abspath(os.path.join(INSTALL_PY, __file__)) + " " + os.path.abspath(os.path.join(INSTALL_SHARE, BUILTIN_SOUNDS_PATH)) + "\npause\n"
+        cmd = "@echo off\n" + '"' + sys.executable + '" "' + os.path.abspath(os.path.join(INSTALL_PY, __file__)) + '" "' + os.path.abspath(os.path.join(INSTALL_SHARE, BUILTIN_SOUNDS_PATH)) + '"\npause\n'
         sh_script_name = os.path.join(INSTALL_BIN, "cave_sound_server.bat")
         sh_script = open(sh_script_name, "w")
         sh_script.write(cmd)
@@ -636,7 +636,7 @@ def install():
         os.chmod(sh_script_name, os.stat(sh_script_name).st_mode | stat.S_IEXEC)
     else:
         # create a shell script
-        cmd = "#!/usr/bin/env " + sys.executable + " " + os.path.abspath(os.path.join(INSTALL_PY, __file__)) + " " + os.path.abspath(os.path.join(INSTALL_SHARE, BUILTIN_SOUNDS_PATH)) + "\n"
+        cmd = "#!/usr/bin/env " + sys.executable.replace(" ", "\\ ") + " " + os.path.abspath(os.path.join(INSTALL_PY, __file__)).replace(" ", "\\ ") + " " + os.path.abspath(os.path.join(INSTALL_SHARE, BUILTIN_SOUNDS_PATH)).replace(" ", "\\ ") + "\n"
         sh_script_name = os.path.join(INSTALL_BIN, "cave_sound_server.sh")
         sh_script = open(sh_script_name, "w")
         sh_script.write(cmd)
