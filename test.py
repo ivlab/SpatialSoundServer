@@ -2,6 +2,13 @@
 
 import os
 import time
+import numpy
+
+
+
+
+
+
 
 
 # EXAMPLE 1: TESTING THE SIMPLE API
@@ -31,7 +38,7 @@ os.system("curl -G -d snd=testloop.wav localhost:8000/stop")
 
 
 
-# EXAMPLE 2: USE THE SPATIAL API WITH A MOVING LISTENER AND STATIONARY SOURCE
+# EXAMPLE 2: USE THE SPATIAL API WITH A MOVING LISTENER AND STATIONARY SOURCE (SHOULD SOUND LIKE BEEP MOVES FROM RIGHT TO LEFT)
 print("\n\nExample 2")
 
 # move listener to -10,0,0
@@ -52,20 +59,22 @@ os.system("curl -G -d id=11 localhost:8000/del_source")
 
 
 
-# EXAMPLE 3: USE THE SPATIAL API WITH A MOVING SOURCE, SET VELOCITY TO GET DOPPLER EFFECT
+# EXAMPLE 3: USE THE SPATIAL API WITH A MOVING SOURCE, SET VELOCITY TO GET DOPPLER EFFECT (SHOULD SOUND LIKE BEEP MOVES LEFT TO RIGHT)
 print("\n\nExample 3")
 
 # move listener to 0,0,0
 os.system("curl -G -d x=0 -d y=0 -d z=0 localhost:8000/listener_param")
 
 # create a repeating beep that moves from left to right with a velocity of 1 unit for every 0.1 seconds
-speed = 1.0 / 0.1
-os.system("curl -G -d id=10 -d snd=beep-01.wav -d looping=1 -d x=-10 -d vx=" + str(speed) + " localhost:8000/create_source")
+speed = 10.0 / 0.1
+os.system("curl -G -d id=10 -d snd=beep-02.wav -d looping=1 -d x=-10 -d y=0 -d z=0 -d vx=" + str(speed) + " -d vy=0 -d vz=0 localhost:8000/create_source")
 
 # move it from left to right 
-for x in range(-10, 10):
+for x in numpy.arange(-10, 10, 0.1):
+    print(x)
     os.system("curl -G -d id=10 -d x=" + str(x) + " localhost:8000/source_param")
-    time.sleep(0.1)
+    #os.system("curl -G -d id=10 -d x=" + str(x) + " -d y=" + str(x) + " -d z=" + str(x) + " localhost:8000/source_param")
+    time.sleep(0.25)
 
 # stop the source
 os.system("curl -G -d id=10 localhost:8000/stop_source")

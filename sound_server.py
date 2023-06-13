@@ -252,7 +252,7 @@ def route_source_param():
 
     cone_inner_angle = request.args.get('cone_inner_angle', type=float)
     if cone_inner_angle is not None:
-        set_souurce_cone_inner_angle(id, cone_inner_angle)
+        set_source_cone_inner_angle(id, cone_inner_angle)
 
     cone_outer_angle = request.args.get('cone_outer_angle', type=float)
     if cone_outer_angle is not None:
@@ -468,7 +468,6 @@ def set_source_vz(id: int, vz: float):
 def set_source_dx(id: int, dx: float):
     source = spatial_sources[id]
     tmp,dy,dz = source.direction
-    dir[0] = dx
     source.set_direction((dx,dy,dz))
 
 def set_source_dy(id: int, dy: float):
@@ -601,6 +600,10 @@ def main():
 
     print(" * Starting IV/LAB Cave Spatial Sound Server...")
     signal.signal(signal.SIGINT, shutdown)
+
+    oalSetAutoInit(False)
+    oalInit()
+    #alDistanceModel(AL_NONE)
 
     # get paths to all files in the sounds_path directory, including within subdirs of sounds_path
     all_sound_files = [os.path.join(dirpath,f) for (dirpath, dirnames, filenames) in os.walk(sounds_path) for f in filenames]

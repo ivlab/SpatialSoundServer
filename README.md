@@ -12,10 +12,27 @@ If using a special speaker configuration, like in the IV/LAB cave, you need to h
 Tested on Windows:
 * Download the latest pre-built binaries for openal-soft from here: https://openal-soft.org/
 * Unzip somewhere; follow the hard-to-interpret instructions in the readme to install, specifically:
-  - Copy bin/Win64/soft_oal.dll to C:/Windows/SysWOW64
-  - Copy bin/Win32/soft_oal.dll to C:/Windows/System32
+  - Copy bin/Win64/soft_oal.dll to C:/Windows/system32/OpenAL32.dll (overwriting the current file if there is one)
 * Check the OpenAL installation by making sure you can run the openal-info64.exe provided with openal-soft without error.
-* Run the alsoft-config/alsoft-config.exe utility that comes with openal-soft to configure openal for headphones or the particular speaker arrangement that you are using.
+* Run the alsoft-config/alsoft-config.exe utility that comes with openal-soft to configure openal for headphones or the particular speaker arrangement that you are using.  For the cave:
+  - On the Playback tab, for channels, select 7.1 Surround
+  - On the Renderer tab, for the 7.1 Surround config file, click Browse, and select the openal-config/hexagon.ambdec file in this repo.
+  - Click Apply.
+
+Note, the output labels in hexagon.ambdef do not seem to be totally correct.  This is what we see in practice:
+Output 1 = LF
+Output 2 = RF
+Output 3 = not used
+Output 4 = not used
+Output 5 = LB
+Output 6 = RB
+Output 7 = LS
+Output 8 = RS
+
+
+Notes for future refinements:
+* The hexagon arrangement ignores the vertical dimension.  The openal-config dir also includes configs for 3D7.1 and cube that, in theory, could work for other arrangements of the speakers; however, we haven't been able to make these work.  When trying to set them, we get the error: ```AL lib: (EE) alcOpenDevice: Unsupported channels: surround3d71```  For now, we'll just proceed with the hexagon arrangement until we have a specific need for sound that varies in the Y dimension.
+
 
 ## Installing Python dependencies PyOpenAL and Flask (required)
 The project uses the [PyOpenAL](https://pypi.org/project/PyOpenAL/) python bindings for accessing OpenAL and the Flask library for creating the http server.  Both can be installed using pip:
