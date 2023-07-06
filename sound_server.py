@@ -51,7 +51,7 @@ import sys
 import shutil
 import stat
 
-BUILTIN_SOUNDS_PATH = "sounds"
+BUILTIN_SOUNDS_PATH = os.path.join(INSTALL_SHARE, "sounds")
 sounds_path = BUILTIN_SOUNDS_PATH
 buffers = {} # openal buffers indexed by snd (sound file name)
 simple_sources = {} # openal sources indexed by snd (sound file name)
@@ -78,7 +78,8 @@ def route_reset():
 def route_play():
     snd = request.args.get('snd', type=str)
     if snd is not None:
-        play_simple(snd)
+        if not play_simple(snd):
+            print("Error loading sound " + snd)
     else:
         print("Missing snd parameter")
     return html_blurb()
@@ -87,7 +88,8 @@ def route_play():
 def route_loop():
     snd = request.args.get('snd', type=str)
     if snd is not None:
-        play_simple(snd, True)
+        if not play_simple(snd, True):
+            print("Error loading sound " + snd)
     else:
         print("Missing snd parameter")
     return html_blurb()
@@ -373,7 +375,7 @@ def create_and_play_spatial(id: int, snd: str):
         source = Source(buffer, True)
         if source is not None:
             spatial_sources[id] = source
-            source.play()
+            #source.play()
             return True
     return False
 
@@ -576,6 +578,7 @@ def shutdown(signum, frame):
 # snd is the filename including the relative path from the sounds_dir to the wav file 
 def get_or_load_buffer(snd: str):
     full_filename = os.path.join(sounds_path, snd)
+    print('Loading ' + full_filename)
     if os.path.isfile(full_filename):
         if snd in buffers.keys():
             return buffers[snd]
@@ -612,7 +615,7 @@ def main():
     print(" * Available sound files in '" + sounds_path + "'")
     print(all_sound_files_bullet_list)
 
-    app.run(host="localhost", port=8000, debug=True)
+    app.run(host="0.0.0.0", port=7999, debug=True)
 
 
 def install():
