@@ -108,7 +108,7 @@ Possible parameters (all are optional, include as many as you like in a single c
 * upz=float -- Part of the listener's orientation, the z component of the up vector (default = 0)
 * gain=float -- The gain factor for the listener, a float value between 0 and 1 (default = 1)
 
-### Create and play a new audio source
+### Create a new audio source
 
 http://localhost:8000/create_source?id=1&snd=test.wav
 
@@ -118,6 +118,20 @@ Required parameters:
 
 Optional parameters:
 * Any of the parameters listed in the next section, can also be included in the create_source command.
+
+Note: create does not automatically play the source because you may wish, for example, to create (load) many sources on program startup, and
+then play them later.  To actually start playing the source, call the play_source command described next.
+
+### Play/Pause/Stop/Rewind an existing audio source
+
+http://localhost:8000/play_source?id=1
+http://localhost:8000/pause_source?id=1
+http://localhost:8000/stop_source?id=1
+http://localhost:8000/rewind_source?id=1
+
+Required parameters:
+* id=int -- The integer id number for this source that you used when creating the source.
+
 
 ### Update parameters for an existing audio source
 
@@ -156,22 +170,9 @@ Optional parameters:
 * relative=float -- TODO
 
 
-### Stop/Start/Pause/Rewind an existing audio source
-
-http://localhost:8000/stop_source?id=1
-http://localhost:8000/play_source?id=1
-http://localhost:8000/pause_source?id=1
-http://localhost:8000/rewind_source?id=1
-
-Required parameters:
-* id=int -- The integer id number for this source that you used when creating the source.
-
-
 ### Delete an existing audio source
 
 http://localhost:8000/del_source?id=1
 
 Required parameters:
 * id=int -- The integer id number for this source that you used when creating the source.
-
-
